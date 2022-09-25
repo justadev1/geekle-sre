@@ -1,0 +1,13 @@
+groups:
+  - name: process_cpu_user_seconds_total
+    rules:
+      - record: process_cpu_user_seconds_total
+        expr: process_cpu_user_seconds_total
+  - name: prober_rules
+    rules:
+      - record: prober:success_rate:1m
+        expr: success_counter{app="prober"}
+      - record: prober:failure_rate:1m
+        expr: error_counter{app="prober"}
+      - record: prober:overall_avail:1m
+        expr: prober:success_rate:1m / (prober:success_rate:1m + prober:failure_rate:1m)
